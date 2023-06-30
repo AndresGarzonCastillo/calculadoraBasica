@@ -1,0 +1,82 @@
+from tkinter import *
+from tkinter import ttk
+
+ventana = Tk()
+ventana.title("Calculadora")
+numero_actual = ""
+i = 0
+e_texto = Entry(ventana, font=("arial 20"))
+e_texto.grid(row=0, column=0, columnspan=4, padx=5, pady=5)
+
+operaciones = []  # Lista para almacenar números y operadores
+
+def click_boton(valor):
+    global numero_actual
+    if valor in ["+", "-", "*", "/"]:
+        numero_actual = e_texto.get()
+        e_texto.delete(0, END)
+        operaciones.append(numero_actual)  # Agregar número a la lista
+        operaciones.append(valor)  # Agregar operador a la lista
+    else:
+        e_texto.insert(END, str(valor))
+
+def borrar():
+    global numero_actual
+    e_texto.delete(0, END)
+    numero_actual = ""
+
+def operacion():
+    global numero_actual
+    try:
+        operaciones.append(e_texto.get())  # Agregar el último número ingresado a la lista
+        expresion = "".join(operaciones)  # Unir la lista en una cadena
+        resultado = eval(expresion)
+        e_texto.delete(0, END)
+        e_texto.insert(END, str(resultado))
+        numero_actual = ""
+        operaciones.clear()  # Limpiar la lista de operaciones
+    except Exception:
+        e_texto.delete(0, END)
+        e_texto.insert(END, "Error")
+        
+boton1 = Button(ventana, text="1", width=5, height=2, command=lambda: click_boton(1))
+boton2 = Button(ventana, text="2", width=5, height=2, command=lambda: click_boton(2))
+boton3 = Button(ventana, text="3", width=5, height=2, command=lambda: click_boton(3))
+boton4 = Button(ventana, text="4", width=5, height=2, command=lambda: click_boton(4))
+boton5 = Button(ventana, text="5", width=5, height=2, command=lambda: click_boton(5))
+boton6 = Button(ventana, text="6", width=5, height=2, command=lambda: click_boton(6))
+boton7 = Button(ventana, text="7", width=5, height=2, command=lambda: click_boton(7))
+boton8 = Button(ventana, text="8", width=5, height=2, command=lambda: click_boton(8))
+boton9 = Button(ventana, text="9", width=5, height=2, command=lambda: click_boton(9))
+boton0 = Button(ventana, text="0", width=17, height=2, command=lambda: click_boton(0))
+boton_borrar = Button(ventana, text="AC", width=5, height=2, command=borrar)
+boton_parentesis1 = Button(ventana, text="(", width=5, height=2, command=lambda: click_boton("("))
+boton_parentesis2 = Button(ventana, text=")", width=5, height=2, command=lambda: click_boton(")"))
+boton_div = Button(ventana, text="/", width=5, height=2, command=lambda: click_boton("/"))
+boton_mult = Button(ventana, text="*", width=5, height=2, command=lambda: click_boton("*"))
+boton_suma = Button(ventana, text="+", width=5, height=2, command=lambda: click_boton("+"))
+boton_resta = Button(ventana, text="-", width=5, height=2, command=lambda: click_boton("-"))
+boton_punto = Button(ventana, text=".", width=5, height=2, command=lambda: click_boton("."))
+boton_igual = Button(ventana, text="=", width=5, height=2, command=operacion)
+
+boton_borrar.grid(row=1, column=0, padx=5, pady=5)
+boton_parentesis1.grid(row=1, column=1, padx=5, pady=5)
+boton_parentesis2.grid(row=1, column=2, padx=5, pady=5)
+boton_div.grid(row=1, column=3, padx=5, pady=5)
+boton7.grid(row=2, column=0, padx=5, pady=5)
+boton8.grid(row=2, column=1, padx=5, pady=5)
+boton9.grid(row=2, column=2, padx=5, pady=5)
+boton_mult.grid(row=2, column=3, padx=5, pady=5)
+boton4.grid(row=3, column=0, padx=5, pady=5)
+boton5.grid(row=3, column=1, padx=5, pady=5)
+boton6.grid(row=3, column=2, padx=5, pady=5)
+boton_suma.grid(row=3, column=3, padx=5, pady=5)
+boton1.grid(row=4, column=0, padx=5, pady=5)
+boton2.grid(row=4, column=1, padx=5, pady=5)
+boton3.grid(row=4, column=2, padx=5, pady=5)
+boton_resta.grid(row=4, column=3, padx=5, pady=5)
+boton0.grid(row=5, column=0, columnspan=2, padx=5, pady=5)
+boton_punto.grid(row=5, column=2, padx=5, pady=5)
+boton_igual.grid(row=5, column=3, padx=5, pady=5)
+
+ventana.mainloop()
